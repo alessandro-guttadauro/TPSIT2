@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizi Vue</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 1) Profilo Utente -->
+    <h2>Profilo Utente</h2>
+    <p>Nome: {{ nome }}</p>
+    <p>Cognome: {{ cognome }}</p>
+    <p>Città: {{ citta }}</p>
+
+    <hr>
+
+    <!-- 2) Dettagli Prodotto -->
+    <h2>Dettagli Prodotto</h2>
+    <p>Il prodotto {{ nomeProdotto }} costa {{ prezzo }} €</p>
+
+    <hr>
+
+    <!-- 3) Immagine Disattivata -->
+    <h2>Immagine Disattivata</h2>
+    <button v-bind:disabled="immagineDisabilitata">Carica Immagine</button>
+    <p>Stato: {{ immagineDisabilitata ? 'Disabilitata' : 'Abilitata' }}</p>
+
+    <hr>
+
+    <!-- 4) Tooltip Dinamico -->
+    <h2>Tooltip Dinamico</h2>
+    <p v-bind:title="messaggioTooltip">
+      Passa il mouse qui per vedere il tooltip!
+    </p>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          // 1) Profilo utente
+          nome: "Luca",
+          cognome: "Rossi",
+          citta: "Milano",
+
+          // 2) Dettagli prodotto
+          nomeProdotto: "Laptop Lenovo",
+          prezzo: 899,
+
+          // 3) Immagine disattivata
+          immagineDisabilitata: true,
+
+          // 4) Tooltip dinamico
+          messaggioTooltip: "Questo è un tooltip dinamico creato con Vue!"
+        };
+      }
+    }).mount("#app");
+  </script>
+</body>
+</html>

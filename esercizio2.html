@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizi Vue - Parte 2</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    .semaforo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    .rosso { background-color: red; }
+    .giallo { background-color: gold; color: black; }
+    .verde { background-color: green; }
+    table {
+      border-collapse: collapse;
+      width: 50%;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 1) Login Utente -->
+    <h2>1️⃣ Login Utente</h2>
+    <p v-if="isLoggedIn">Benvenuto, Utente!</p>
+    <p v-else>Per favore, accedi.</p>
+    <button @click="isLoggedIn = !isLoggedIn">
+      {{ isLoggedIn ? 'Logout' : 'Login' }}
+    </button>
+
+    <hr>
+
+    <!-- 2) Semaforo -->
+    <h2>2️⃣ Semaforo</h2>
+    <div v-if="coloreSemaforo === 'rosso'" class="semaforo rosso">Stop</div>
+    <div v-else-if="coloreSemaforo === 'giallo'" class="semaforo giallo">Attenzione</div>
+    <div v-else-if="coloreSemaforo === 'verde'" class="semaforo verde">Vai!</div>
+
+    <p>Cambia colore del semaforo:</p>
+    <button @click="coloreSemaforo = 'rosso'">Rosso</button>
+    <button @click="coloreSemaforo = 'giallo'">Giallo</button>
+    <button @click="coloreSemaforo = 'verde'">Verde</button>
+
+    <hr>
+
+    <!-- 3) Classifica -->
+    <h2>3️⃣ Classifica Team Preferiti</h2>
+    <ol>
+      <li v-for="(team, index) in teamPreferiti" :key="index">{{ team }}</li>
+    </ol>
+
+    <hr>
+
+    <!-- 4) Catalogo Prodotti -->
+    <h2>4️⃣ Catalogo Prodotti</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Prezzo (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="prodotto in prodotti" :key="prodotto.id">
+          <td>{{ prodotto.id }}</td>
+          <td>{{ prodotto.nome }}</td>
+          <td>{{ prodotto.prezzo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          // 1) Login Utente
+          isLoggedIn: false,
+
+          // 2) Semaforo
+          coloreSemaforo: 'rosso',
+
+          // 3) Classifica
+          teamPreferiti: ['Milan', 'Juventus', 'Inter'],
+
+          // 4) Catalogo Prodotti
+          prodotti: [
+            { id: 1, nome: 'Mouse Wireless', prezzo: 25.99 },
+            { id: 2, nome: 'Tastiera Meccanica', prezzo: 79.90 },
+            { id: 3, nome: 'Monitor 24"', prezzo: 159.00 }
+          ]
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
