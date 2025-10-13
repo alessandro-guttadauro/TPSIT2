@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizi Vue.js (via CDN)</title>
+
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f6f8fa;
+      padding: 20px;
+    }
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background-color: #0056b3; }
+    input, select {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px;
+      margin-top: 8px;
+      text-align: center;
+      width: 60%;
+    }
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+   
+    <section>
+      <h2>1️⃣ Cambia Messaggio</h2>
+      <p>{{ messaggio }}</p>
+      <button @click="cambiaMessaggio">Clicca qui</button>
+    </section>
+
+  
+    <section>
+      <h2>2️⃣ Accendi / Spegni Luce</h2>
+      <p v-if="luceAccesa">💡 La luce è accesa</p>
+      <p v-else>🌑 La luce è spenta</p>
+      <button @click="toggleLuce">Toggle Luce</button>
+    </section>
+
+ 
+    <section>
+      <h2>3️⃣ Convertitore di Unità (Kg → g)</h2>
+      <input type="number" v-model.number="pesoKg" placeholder="Inserisci peso in kg">
+      <p>{{ pesoKg }} kg = <strong>{{ pesoKg * 1000 }}</strong> grammi</p>
+    </section>
+
+  
+    <section>
+      <h2>4️⃣ Form di Registrazione</h2>
+      <div>
+        <input v-model="nome" type="text" placeholder="Inserisci il tuo nome">
+      </div>
+
+      <div style="margin-top:10px;">
+        <label><input type="radio" v-model="genere" value="Uomo"> Uomo</label>
+        <label style="margin-left:15px;"><input type="radio" v-model="genere" value="Donna"> Donna</label>
+        <label style="margin-left:15px;"><input type="radio" v-model="genere" value="Altro"> Altro</label>
+      </div>
+
+      <div style="margin-top:10px;">
+        <select v-model="paese">
+          <option disabled value="">-- Seleziona il Paese --</option>
+          <option>Italia</option>
+          <option>Germania</option>
+          <option>Francia</option>
+        </select>
+      </div>
+
+      <div style="margin-top:20px; text-align:left; display:inline-block;">
+        <p><b>Nome:</b> {{ nome || "—" }}</p>
+        <p><b>Genere:</b> {{ genere || "—" }}</p>
+        <p><b>Paese:</b> {{ paese || "—" }}</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+
+    createApp({
+      setup() {
+        
+        const messaggio = ref("Benvenuto!")
+        const cambiaMessaggio = () => {
+          messaggio.value = "Hai cliccato il bottone!"
+        }
+
+  
+        const luceAccesa = ref(false)
+        const toggleLuce = () => {
+          luceAccesa.value = !luceAccesa.value
+        }
+
+  
+        const pesoKg = ref(0)
+
+   
+        const nome = ref("")
+        const genere = ref("")
+        const paese = ref("")
+
+        return {
+          messaggio, cambiaMessaggio,
+          luceAccesa, toggleLuce,
+          pesoKg,
+          nome, genere, paese
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
