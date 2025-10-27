@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizi Vue.js</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    .message-box {
+      color: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .success {
+      background-color: #4caf50;
+    }
+
+    .error {
+      background-color: #f44336;
+    }
+
+    .avatar {
+      display: inline-block;
+      border-radius: 50%;
+      margin: 1rem 0;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      width: 200px;
+      margin: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+
+    input {
+      margin: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>Stato del Messaggio</h2>
+    <div :class="['message-box', messageClass]">
+      {{ message }}
+    </div>
+    <button @click="setSuccess">Imposta come Successo</button>
+    <button @click="setError">Imposta come Errore</button>
+
+    <hr>
+
+    <h2>Avatar Personalizzabile</h2>
+    <div class="avatar" :style="avatarStyle"></div><br>
+    <label>Larghezza: <input type="number" v-model="width" /> px</label>
+    <label>Altezza: <input type="number" v-model="height" /> px</label>
+    <label>Colore sfondo: <input type="color" v-model="color" /></label>
+
+    <hr>
+
+    <h2>Saluto Personale</h2>
+    <saluto-utente></saluto-utente>
+    <saluto-utente></saluto-utente>
+
+    <hr>
+
+    <h2>Card Semplice</h2>
+    <info-card></info-card>
+    <info-card></info-card>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: 'Clicca un pulsante per impostare lo stato!',
+          messageClass: '',
+          width: 100,
+          height: 100,
+          color: '#3498db'
+        }
+      },
+      computed: {
+        avatarStyle() {
+          return {
+            width: this.width + 'px',
+            height: this.height + 'px',
+            backgroundColor: this.color
+          };
+        }
+      },
+      methods: {
+        setSuccess() {
+          this.message = 'Operazione completata con successo!';
+          this.messageClass = 'success';
+        },
+        setError() {
+          this.message = 'Si è verificato un errore.';
+          this.messageClass = 'error';
+        }
+      }
+    });
+
+    // Componente saluto-utente
+    app.component('saluto-utente', {
+      template: `<div style="padding:10px; background:#eef; margin:5px 0; border-radius:6px;">Benvenuto nella nostra applicazione!</div>`
+    });
+
+    // Componente info-card
+    app.component('info-card', {
+      template: `
+        <div class="card">
+          <h3>Titolo della Card</h3>
+          <p>Contenuto della card...</p>
+        </div>
+      `
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
